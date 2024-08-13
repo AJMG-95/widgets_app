@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgets_app/config/menu/menu_item.dart';
+import 'package:widgets_app/presentation/screens/cards/cards_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const String  name = "HomeScreen";
+
   const HomeScreen({super.key});
 
   @override
@@ -52,14 +55,17 @@ class _CustomeListTile extends StatelessWidget {
       title: Text(menuItem.title),
       subtitle: Text(menuItem.subtitle),
       onTap: () {
-        //? Con Navigator
+        //? Con Navigator (Propio de Flutter)
         /* Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const ButtonsScreen())); */
-        //? Con router
+        //? Con router (Propio de Flutter)
         /* Navigator.pushNamed(context, menuItem.link); */
-        //?Con GoRouter por link
-        context.push( menuItem.link );
 
+        //?Con GoRouter por link (Propio de GoRouter)
+        context.push( menuItem.link );
+        //?Con GoRouter por nombre de ruta (Propio de GoRouter)
+        //*Para usar este método habria que añadir otro parámetro más al menItem (name)
+        /* context.pushNamed( CardsScreen.name ); */
       },
     );
   }
