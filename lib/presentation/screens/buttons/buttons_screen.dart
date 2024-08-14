@@ -8,6 +8,7 @@ class ButtonsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Buttons Screen'),
@@ -15,6 +16,7 @@ class ButtonsScreen extends StatelessWidget {
       body: const _ButtonsView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {context.pop()},
+        backgroundColor: colors.primary,
         child: const Icon(Icons.arrow_back_ios_new_rounded),
       ),
     );
@@ -77,7 +79,36 @@ class _ButtonsView extends StatelessWidget {
               ),
             ),
             //TODO: CustomButton
+            const CustomButton(),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  // Acepta un callback nullable que se llamará al tocar el botón
+  final VoidCallback? onTap;
+
+  const CustomButton({super.key, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    //* ClipRRect sirge para implementar bordes redondeados
+    //!Ojo es iportante que ClipRRect contenga un widget Material para asegurar que el recorte se aplique a todo el contenido
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Material(
+        color: onTap != null ? colors.primary: colors.primary.withAlpha(127),
+        //* InkWell es como un GestureDetector pero con splah efect al usar la propiedad onTap
+        child: InkWell(
+          onTap: onTap,
+          child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child:
+                  Text('CustomButton', style: TextStyle(color: Colors.white))),
         ),
       ),
     );
