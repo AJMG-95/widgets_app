@@ -28,14 +28,14 @@ class _HomeView extends StatelessWidget {
       itemBuilder: (context, index) {
         final menuItem = appMenuIntems[index];
 
-        return _CustomeListTile(menuItem: menuItem);
+        return _CustomListTile(menuItem: menuItem);
       },
     );
   }
 }
 
-class _CustomeListTile extends StatelessWidget {
-  const _CustomeListTile({
+class _CustomListTile extends StatelessWidget {
+  const _CustomListTile({
     required this.menuItem,
   });
 
