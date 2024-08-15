@@ -35,17 +35,32 @@ class _CardsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return SingleChildScrollView(
       child: Column(
         children: [
           const SizedBox(
-            height: 20,
-            child: Text(
-              '_CardType1',
-              style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+            height: 10,
+          ),
+          Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width * 0.75,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(color: colors.primary),
+                ),
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(20))),
+            child: const Center(
+              child: Text(
+                '_CardType1',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           ...cards.map((card) => _CardType1(
@@ -53,13 +68,27 @@ class _CardsView extends StatelessWidget {
                 elevation: card['elevation'],
               )),
           const SizedBox(
-            height: 20,
-            child: Text(
-              '_CardType2',
-              style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+            height: 30,
+          ),
+          Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width * 0.75,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(color: colors.primary),
+                ),
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(20))),
+            child: const Center(
+              child: Text(
+                '_CardType2',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           ...cards.map((card) => _CardType2(
@@ -67,13 +96,27 @@ class _CardsView extends StatelessWidget {
                 elevation: card['elevation'],
               )),
           const SizedBox(
-            height: 20,
-            child: Text(
-              '_CardType3',
-              style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+            height: 30,
+          ),
+          Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width * 0.75,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(color: colors.primary),
+                ),
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(20))),
+            child: const Center(
+              child: Text(
+                '_CardType3',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           ...cards.map((card) => _CardType3(
@@ -81,13 +124,27 @@ class _CardsView extends StatelessWidget {
                 elevation: card['elevation'],
               )),
           const SizedBox(
-            height: 20,
-            child: Text(
-              '_CardType4',
-              style: TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold),
+            height: 30,
+          ),
+          Container(
+            height: 50,
+            width: MediaQuery.of(context).size.width * 0.75,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border(
+                  bottom: BorderSide(color: colors.primary),
+                ),
+                borderRadius:
+                    const BorderRadius.vertical(bottom: Radius.circular(20))),
+            child: const Center(
+              child: Text(
+                '_CardType4',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           ...cards.map((card) => _CardType4(
@@ -236,9 +293,9 @@ class _CardType4 extends StatelessWidget {
               alignment: Alignment.topRight,
               child: Container(
                 decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20))
-                ),
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.only(bottomLeft: Radius.circular(20))),
                 child: IconButton(
                   icon: const Icon(Icons.more_vert_outlined),
                   onPressed: () {},
