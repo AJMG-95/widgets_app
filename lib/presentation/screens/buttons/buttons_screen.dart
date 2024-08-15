@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class ButtonsScreen extends StatelessWidget {
+  //* Esta variable estatica puede ser útil, por ejemplo,
+  //* para identificar esta pantalla en rutas de navegación
+  //* u otros lugares donde necesites un identificador único,
+  //* sin la necesidad crear una instancia de la clase
   static const String name = "ButtonsScreen";
 
   const ButtonsScreen({super.key});
@@ -101,7 +105,7 @@ class CustomButton extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Material(
-        color: onTap != null ? colors.primary: colors.primary.withAlpha(127),
+        color: onTap != null ? colors.primary : colors.primary.withAlpha(127),
         //* InkWell es como un GestureDetector pero con splah efect al usar la propiedad onTap
         child: InkWell(
           onTap: onTap,
