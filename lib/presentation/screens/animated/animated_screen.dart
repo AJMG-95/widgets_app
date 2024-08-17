@@ -18,6 +18,8 @@ class _AnimatedScreenState extends State<AnimatedScreen> {
   void _changeShape() {
     final random = Random();
 
+    // Se le suma un valor al width y height por el tipo de animacion y
+    // para que se ajuste al tipo double
     width = random.nextInt(300) + 120;
     height = random.nextInt(300) + 120;
     borderRadius = random.nextInt(100) + 20;
@@ -32,7 +34,7 @@ class _AnimatedScreenState extends State<AnimatedScreen> {
     final colors = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aniated Container'),
+        title: const Text('Animated Container'),
       ),
       body: Center(
         // Es igual que un container pero con animación
