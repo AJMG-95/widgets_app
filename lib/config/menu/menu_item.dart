@@ -13,6 +13,7 @@ class MenuItem {
       required this.icon});
 }
 
+// Cada vez que se crea un MenuItem, hay que definir la ruta del link en el archivo app_router.dart
 const appMenuIntems = <MenuItem>[
   MenuItem(
       title: 'Botones',
@@ -34,4 +35,9 @@ const appMenuIntems = <MenuItem>[
       subtitle: 'Indicadores en pantalla',
       link: '/snackbars',
       icon: Icons.info_outline),
+  MenuItem(
+      title: 'Animated Container',
+      subtitle: 'Statefull widget animado',
+      link: '/animated',
+      icon: Icons.check_box_outline_blank_outlined),
 ];
