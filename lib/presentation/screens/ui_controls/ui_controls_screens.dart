@@ -47,6 +47,8 @@ class _UiControlsViewState extends State<_UiControlsView> {
                   isDeveloper = !isDeveloper;
                 })),
 
+        //* Permite guardar los RadioListTile y/o CheckboxListTile en un desplegable
+        // * a la par que permite mostrar la tematica del desplegable y la opción elegida
         ExpansionTile(
           title: const Text('Vehiculo de transporte'),
           subtitle: Text('$selectedTransportation'),

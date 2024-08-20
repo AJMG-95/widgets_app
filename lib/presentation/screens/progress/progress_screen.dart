@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProgressScreen extends StatelessWidget {
   static const name = "progress_screen";
