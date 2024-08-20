@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -26,9 +27,56 @@ final slides = <SlideInfo>[
       'assets/images/1.png'),
 ];
 
-class AppTutorialScreen extends StatelessWidget {
+class AppTutorialScreen extends StatefulWidget {
   static const name = "tutorial_screen";
   const AppTutorialScreen({super.key});
+
+  @override
+  State<AppTutorialScreen> createState() => _AppTutorialScreenState();
+}
+
+class _AppTutorialScreenState extends State<AppTutorialScreen> {
+  //* El PageController, sabe el espacio que ocupa el pageView, si se está moviendo, etc.
+  // * Para usar un controlador es necesario que el widget sea un StatefulWidget,
+  // * Y asi poder crear el controlador en el state del widget
+  final PageController pageViewController = PageController();
+
+  //* Bandera booleana para indicar que se ha alcanzado el último slide
+  bool endReached = false;
+
+  //* Para agregar un listener al PageController se debe usar el ciclo de vida del StatefulWidget,
+  // * initState, dispose, etc.
+
+  @override
+  void initState() {
+    super.initState();
+
+    //* Añade el listener al PageController
+    // * el listener addListener, es una función void, que no requiere nada ni devuelve nada
+    // * esto ocurre porque toda la información se encuentra en el PageController()
+    pageViewController.addListener(() {
+      //! 0jo: el indide de las paginas no son números (1,2,3) enteros sino double
+      // !  (1.0,...,1.5...,2.0), ya que durante el cambio de página hay un punto
+      // ! en el que se ven dos páginas
+      /* debugPrint('PÁGINA ${pageViewController.page}'); */
+
+      final page = pageViewController.page ?? 0;
+      if (!endReached && page >= (slides.length - 1.5)) {
+        setState(() {
+          endReached = true;
+        });
+      }
+    });
+  }
+
+  //* Cada vez que se coloque un listener o se use un controlador es buena practica
+  // * usar un dispose, para limpiar el contexto de listeners y controladores, y así
+  // * no gastar más memoria de la necesaria
+  @override
+  void dispose() {
+    pageViewController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +88,7 @@ class AppTutorialScreen extends StatelessWidget {
           // * permite hacer scroll en una de las dos direcciones, por defecto
           // * Horizontal pero se puede especificar mediante scrollDirection
           PageView(
+            controller: pageViewController,
             physics: const BouncingScrollPhysics(),
             children: slides
                 .map((slideData) => _Slide(
@@ -55,7 +104,26 @@ class AppTutorialScreen extends StatelessWidget {
               onPressed: () => context.pop(),
               child: const Text('Salir'),
             ),
-          )
+          ),
+
+          //* Usa un operador ternario para mostrar el widget. Se suele usar SizedBox vacío,
+          // * para mostrar un widget de 0px's
+          endReached
+              ? Positioned(
+                  bottom: 30,
+                  right: 30,
+                  //* El botón aparece muy abruptamente, es por ello que se va a usar el paquete
+                  // * animate_do, para mostrarlo con una animación "sencilla"
+                  child: FadeInRight(
+                    //* El from le inica que solo se mueva x unidades
+                    from: 15,
+                    delay: const Duration(milliseconds: 700),
+                    child: FilledButton(
+                      onPressed: () => context.pop(),
+                      child: const Text('Comenzar'),
+                    ),
+                  ))
+              : const SizedBox(),
         ],
       ),
     );
