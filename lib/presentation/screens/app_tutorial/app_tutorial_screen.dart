@@ -117,7 +117,7 @@ class _AppTutorialScreenState extends State<AppTutorialScreen> {
                   child: FadeInRight(
                     //* El from le inica que solo se mueva x unidades
                     from: 15,
-                    delay: const Duration(milliseconds: 700),
+                    delay: const Duration(milliseconds: 500),
                     child: FilledButton(
                       onPressed: () => context.pop(),
                       child: const Text('Comenzar'),
