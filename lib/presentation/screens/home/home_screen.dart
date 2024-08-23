@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgets_app/config/menu/menu_item.dart';
+import 'package:widgets_app/presentation/widgets/side_menu.dart';
 
 class HomeScreen extends StatelessWidget {
-  static const String  name = "HomeScreen";
+  static const String name = "HomeScreen";
 
   const HomeScreen({super.key});
 
@@ -14,6 +15,11 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Flutter + Material 3'),
       ),
       body: const _HomeView(),
+      //* drawer es una propiead de Scaffold que saca un menú lateraldesde la izquierda
+      // * tambien se dispone de endDrawer que saca el menú desde la derecha
+      // * Para no sobrecargar esta vist se crea un widget customizado en
+      // * otro archivo: lib\presentation\widgets\side_menu.dart
+      drawer: const SideMenu(),
     );
   }
 }
@@ -61,7 +67,7 @@ class _CustomListTile extends StatelessWidget {
         /* Navigator.pushNamed(context, menuItem.link); */
 
         //?Con GoRouter por link (Propio de GoRouter)
-        context.push( menuItem.link );
+        context.push(menuItem.link);
         //?Con GoRouter por nombre de ruta (Propio de GoRouter)
         //*Para usar este método habria que añadir otro parámetro más al menItem (name)
         /* context.pushNamed( CardsScreen.name ); */
