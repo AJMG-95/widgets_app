@@ -46,8 +46,23 @@ class _SideMenuState extends State<SideMenu> {
         // * y se va a poder acceder a las propiedades de los mismo para mostrarlas/usarlas
         /* const NavigationDrawerDestination(
             icon: Icon(Icons.add), label: Text('Home Screen')), */
-        ...appMenuIntems.map((item) => NavigationDrawerDestination(
-            icon: Icon(item.icon), label: Text(item.title)))
+        /*  ...appMenuIntems.map((item) => NavigationDrawerDestination(
+            icon: Icon(item.icon), label: Text(item.title))) */
+        //* Se puede dar mejor aspecto al menú subdividiendolo y añadiendo barras divisorias
+        ...appMenuIntems.sublist(0, 3).map((item) =>
+            NavigationDrawerDestination(
+                icon: Icon(item.icon), label: Text(item.title))),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+          child: Divider(),
+        ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 10, 16, 10),
+          child: Text('More Options '),
+        ),
+        ...appMenuIntems.sublist(3).map((item) =>
+            NavigationDrawerDestination(
+                icon: Icon(item.icon), label: Text(item.title))),
       ],
     );
   }
