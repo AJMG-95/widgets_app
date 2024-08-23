@@ -63,8 +63,40 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
     if (!isMounted) return;
 
     setState(() {});
+     //* Una vez iniciada la carga de los nuevos elementos se produce el scroll hacia abajo
+     // * para que el usuario sepa que hay más elementos hacia abajo
+    moveScrollToBotton();
+  }
 
-    //TODO: mover scroll
+  Future<void> onRefresh() async {
+    isLoading = true;
+    setState(() {});
+    await Future.delayed(const Duration(seconds: 3));
+    if (!isMounted) return;
+
+    isLoading = false;
+    final lastId = imagesIds.last;
+    // Esto borra el contenido de la lista:
+    imagesIds.clear();
+    imagesIds.add(lastId + 1);
+    addFiveImages();
+
+    setState(() {});
+  }
+
+  void moveScrollToBotton() {
+    //*Hay que determinar la posición del usuario, para que solo se vaya hacia abajo cunado
+    // * esté muy cerca del final
+    // Si el usuario está en la posición de pixels (scrollController.position.pixels) 100 y
+    // la posición másxima (scrollController.position.maxScrollExtent) es 110, lacondición
+    // del if no se cumple u haría scroll automatico hasta el final.
+    // En caso de no cumplir la condición el usuario se cumpueda donde está
+    if (scrollController.position.pixels + 150 <=
+        scrollController.position.maxScrollExtent) return;
+
+    scrollController.animateTo(scrollController.position.pixels + 120,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.fastOutSlowIn);
   }
 
   void addFiveImages() {
@@ -90,41 +122,49 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
         context: context,
         removeTop: true,
         removeBottom: true,
-        //* El builer hace que los elementos se construyan bajo demanda, y no tener el
-        // * Screen con todos los elementos cargados, ya que sería poco eficiente
-        // * El builer sabe cuando estan apunto de entrar en pantalla para así generarlos
-        // * Tambien maneja en caché las imagenes por lo que no se van a perder (es muy eficiente)
-        child: ListView.builder(
-            controller: scrollController,
-            //* indica la cantidad de elementos que se deben/pueden cargar
-            itemCount: imagesIds.length,
-            //* Construye los elementos a cargar
-            itemBuilder: (context, index) {
-              // * Permite cargar una imagen y mientras se carga la imagen muestra un placeholder
-              return FadeInImage(
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 300,
-                placeholder: const AssetImage('assets/images/jar-loading.gif'),
-                image: NetworkImage(
-                    'https://picsum.photos/id/${imagesIds[index]}/500/300'),
-              );
-            }),
+        child: RefreshIndicator(
+          edgeOffset: 10,
+          strokeWidth: 2,
+          //* Debe llamar al método onRefresh para ejecutar la llamada a la 'API' y controlar el estado de la carga
+          onRefresh: onRefresh,
+          //* El builer hace que los elementos se construyan bajo demanda, y no tener el
+          // * Screen con todos los elementos cargados, ya que sería poco eficiente
+          // * El builer sabe cuando estan apunto de entrar en pantalla para así generarlos
+          // * Tambien maneja en caché las imagenes por lo que no se van a perder (es muy eficiente)
+          child: ListView.builder(
+              controller: scrollController,
+              //* indica la cantidad de elementos que se deben/pueden cargar
+              itemCount: imagesIds.length,
+              //* Construye los elementos a cargar
+              itemBuilder: (context, index) {
+                // * Permite cargar una imagen y mientras se carga la imagen muestra un placeholder
+                return FadeInImage(
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 300,
+                  placeholder:
+                      const AssetImage('assets/images/jar-loading.gif'),
+                  image: NetworkImage(
+                      'https://picsum.photos/id/${imagesIds[index]}/500/300'),
+                );
+              }),
+        ),
       ),
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => isLoading ? null : context.pop(),
         backgroundColor: colors.primary,
-        child: isLoading ? SpinPerfect(
-          infinite: true,
-          child: const Icon(
-            Icons.refresh_rounded,
-            color: Colors.white,
-            )
-        ) : const Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-          ),
+        child: isLoading
+            ? SpinPerfect(
+                infinite: true,
+                child: const Icon(
+                  Icons.refresh_rounded,
+                  color: Colors.white,
+                ))
+            : const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
       ),
     );
   }
