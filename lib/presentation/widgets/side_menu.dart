@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgets_app/config/menu/menu_item.dart';
 
 //* En el SideMenu se va a necesitar saber cual es la opción seleccionada porque
 // * se van cambiar y activar aopciones, es por ello debe ser un StatefulWidget
 class SideMenu extends StatefulWidget {
-  const SideMenu({super.key});
+  //* Recibe el estado del widget anterior (home_screen)
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const SideMenu({super.key, required this.scaffoldKey});
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -33,6 +37,19 @@ class _SideMenuState extends State<SideMenu> {
         setState(() {
           navDrawerIndex = value;
         });
+
+        //* Para que navege a la opción seleccionada, hay que tender que el valúe
+        // * indica el indice que ocupa la opción en la lista appMenuIntems
+        // * así pues se obtiene el item que se encuentra en el indic "value",
+        // * indexando en la lista appMenuIntems.
+        // * Tras ello podemos acceder a la propiedad link del item y hacer un
+        // * context.push a esa ruta.
+        //!Ojo: recuerda que la navegacion context.push es gracias a la dependencia de go_router
+        final menuItem = appMenuIntems[value];
+        context.push(menuItem.link);
+        //* Aquí se accede al estado del scaffold del home_screen para cerrar el drawer
+        // * en caso de que esté abierto
+        widget.scaffoldKey.currentState?.closeDrawer();
       },
       children: [
         Padding(
@@ -60,9 +77,8 @@ class _SideMenuState extends State<SideMenu> {
           padding: EdgeInsets.fromLTRB(28, 10, 16, 10),
           child: Text('More Options '),
         ),
-        ...appMenuIntems.sublist(3).map((item) =>
-            NavigationDrawerDestination(
-                icon: Icon(item.icon), label: Text(item.title))),
+        ...appMenuIntems.sublist(3).map((item) => NavigationDrawerDestination(
+            icon: Icon(item.icon), label: Text(item.title))),
       ],
     );
   }

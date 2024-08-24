@@ -10,7 +10,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    //* Este key se puede construir dentro de un StatelessWidget, ya que
+    // * este no se va a volver a contruir, pero no se puece hacer dentro
+    // * de un StatefullWidget
+    // * Este scaffoldKey (GlobalKey) va a guardar el ScaffoldState, es decir
+    // * tine la referencia al estado actual de Scaffold (tiene drawer, etc.)
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: const Text('Flutter + Material 3'),
       ),
@@ -19,7 +28,7 @@ class HomeScreen extends StatelessWidget {
       // * tambien se dispone de endDrawer que saca el menú desde la derecha
       // * Para no sobrecargar esta vist se crea un widget customizado en
       // * otro archivo: lib\presentation\widgets\side_menu.dart
-      drawer: const SideMenu(),
+      drawer: SideMenu(scaffoldKey: scaffoldKey,),
     );
   }
 }
