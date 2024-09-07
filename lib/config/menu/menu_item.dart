@@ -16,6 +16,11 @@ class MenuItem {
 // Cada vez que se crea un MenuItem, hay que definir la ruta del link en el archivo app_router.dart
 const appMenuIntems = <MenuItem>[
   MenuItem(
+      title: 'Contador',
+      subtitle: 'Introducción a riverpod',
+      link: '/counter-river',
+      icon: Icons.add),
+  MenuItem(
       title: 'Botones',
       subtitle: 'Varios botones en Flutter',
       link: '/buttons',
