@@ -16,6 +16,11 @@ class MenuItem {
 // Cada vez que se crea un MenuItem, hay que definir la ruta del link en el archivo app_router.dart
 const appMenuIntems = <MenuItem>[
   MenuItem(
+    title: 'Cambiar tema',
+    subtitle: 'Cambiar tema de la aplicación',
+    link: '/theme-changer',
+    icon: Icons.color_lens_outlined),
+  MenuItem(
       title: 'Contador',
       subtitle: 'Introducción a riverpod',
       link: '/counter-river',
@@ -60,4 +65,5 @@ const appMenuIntems = <MenuItem>[
       subtitle: 'Listas infinita y pull to refresh',
       link: '/infinite',
       icon: Icons.list_alt_rounded),
+
 ];
