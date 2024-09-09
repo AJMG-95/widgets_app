@@ -35,7 +35,7 @@ class ThemeNotifier extends StateNotifier<AppTheme> {
 
   void toggledDarkMode() {
     //  El nuevo estado es una copia del esta actual pero con el valor opuesto del isDarkMode
-    // Riverpod se da cuenta de la asignacion del nuevo estrado y se encarga de hacer la notificación
+    // Riverpod se da cuenta de la asignacion del nuevo estado y se encarga de hacer la notificación
     //  a todos los widgets donde sea necesario
     state = state.copyWith(isDarkMode: !state.isDarkMode);
   }
